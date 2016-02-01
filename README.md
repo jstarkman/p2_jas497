@@ -1,8 +1,11 @@
 # p2_jas497
 
-Your description goes here
+Response to problem set number two.
 
 ## Example usage
 
-## Running tests/demos
-    
+``$ rosrun p2_jas497 lidar_alarm``
+
+## More documentation
+
+See `report.pdf` for the brief writeup.

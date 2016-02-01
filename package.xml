@@ -40,8 +40,17 @@
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
   <buildtool_depend>catkin_simple</buildtool_depend>
+
   <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs/LaserScan</build_depend>
+  <build_depend>std_msgs/Float32</build_depend>
+  <build_depend>std_msgs/Bool</build_depend>
+
+  <run_depend>sensor_msgs/LaserScan</run_depend>
+  <run_depend>std_msgs/Float32</run_depend>
+  <run_depend>std_msgs/Bool</run_depend>
   <run_depend>roscpp</run_depend>
+
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- You can specify that this package is a metapackage here: -->
@@ -50,4 +59,3 @@
     <!-- Other tools can request additional information be placed here -->
   </export>
 </package>
-    
