@@ -2,18 +2,21 @@
 
 \usepackage{amsmath, amssymb}
 
+%\usepackage{type1cm} % scalable fonts
+\usepackage{lettrine}
+
 \begin{document}
 \title{EECS 476: PS2}
-\author{James Starkman, jas497}
+\author{James Starkman, jas\oldstylenums{497}}
 \date{2016-02-03}
 \maketitle
 %\setlength{\columnseprule}{0.4pt}.
 
-Let $R$ be the radius of the robot (assumed circular).  Since STDR
-appears to be entirely deterministic and devoid of measurement error
-(by default, anyways), there is no need for any error terms.  Now, for
-each LIDAR ping $i$, let $r_i$ and $\theta_i$ be, respectively, the
-radius and angle of that ping.
+\lettrine{L}{et} $R$ be the radius of the robot (which is circular).
+Since STDR appears to be entirely deterministic and devoid of
+measurement error (by default, anyways), there is no need for any
+error terms.  Now, for each LIDAR ping $i$, let $r_i$ and $\theta_i$
+be, respectively, the radius and angle of that ping.
 
 We wish to ensure a clear tunnel ahead of the robot that is at least
 as wide as the robot is, for at least $d=$ \verb|MIN_SAFE_DISTANCE| in
@@ -31,9 +34,8 @@ laser endpoint are computed from their given polar form, thus:
 \end{equation*}
 
 Note that, since the walls of the STDR map/arena/maze/thing appear to
-be rather rather fuzzy, and since numerical integration has errors, an
-error term has been added to $R$ to avoid close calls.  This value has
-been empirically chosen as 0.1 meters for use with the provided
-reactive\_commander file.
+be rather fuzzy, and since numerical integration (which is effectively
+what reactive\_commander does) has errors, an error term has been
+added to $R$ to avoid close calls.
 
 \end{document}

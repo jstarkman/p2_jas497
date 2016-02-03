@@ -8,8 +8,8 @@ With a `stdr_*` GUI launched, run both of these nodes (*N.B.* bring
 them online in this order.  RC depends on the warnings from LA):
 
 ```bash
-$ rosrun p2_jas497 lidar_alarm
-$ rosrun p2_jas497 reactive_commander
+$ rosrun p2_jas497 p2_lidar_alarm
+$ rosrun p2_jas497 p2_reactive_commander
 ```
 
 ## More documentation
@@ -40,7 +40,8 @@ intelligent (or at least more interesting).
 - A brief report describing your theory of operation (your algorithm's
   logic for lidar_alarm, and, optionally, reactive_commander)
 
-- a Kazaam movie (*.mp4) of your nodes running the STDR simulator.
+- a Kazaam [sic] movie (*.mp4) of your nodes running the STDR
+  simulator.
 
 *Please ZIP all of these things up in a folder titled "p2_caseID.zip"
 (ex. p2_abc123.zip)*
