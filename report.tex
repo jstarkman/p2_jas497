@@ -1,26 +1,39 @@
 \documentclass{article}
 
-\usepackage{amsmath}
+\usepackage{amsmath, amssymb}
 
 \begin{document}
+\title{EECS 476: PS2}
+\author{James Starkman, jas497}
+\date{2016-02-03}
+\maketitle
+%\setlength{\columnseprule}{0.4pt}.
 
-Let $R$ be the radius of the robot (assumed circular).  Since STDR is
-entirely deterministic and devoid of measurement error, there is no
-need for any error terms.  Now, for each LIDAR ping $i$, let $r_i$ and
-$\theta_i$ be, respectively, the radius and angle of that ping.
+Let $R$ be the radius of the robot (assumed circular).  Since STDR
+appears to be entirely deterministic and devoid of measurement error
+(by default, anyways), there is no need for any error terms.  Now, for
+each LIDAR ping $i$, let $r_i$ and $\theta_i$ be, respectively, the
+radius and angle of that ping.
 
 We wish to ensure a clear tunnel ahead of the robot that is at least
-as wide as the robot is, for at least $d=$\verb|MIN_SAFE_DISTANCE| in
-front.  This corresponds to the region $x\in[0,d], y\in[-R,R]$ in the
-robot's coordinates ($+x$ is forwards).  If any point is in this
-region, we sound the alarm.  The $x$ and $y$ values of each point are
-computed thus:
+as wide as the robot is, for at least $d=$ \verb|MIN_SAFE_DISTANCE| in
+front.  This corresponds to the region
+$\{(x,y) \ |\ x\in[0,d], y\in[-R,R]\}$ in the robot's rectilinear
+coordinate system (where $+x$ is forwards).  If any laser endpoint is
+in this region, we sound the alarm.  The $x$ and $y$ values of each
+laser endpoint are computed from their given polar form, thus:
 
 \begin{equation*}
-  \begin{tabular}{rl}
+  \begin{array}{rl}
     x_i &= r_i\times\cos(\theta_i) \\
     y_i &= r_i\times\sin(\theta_i) \\
-  \end{tabular}
+  \end{array}
 \end{equation*}
+
+Note that, since the walls of the STDR map/arena/maze/thing appear to
+be rather rather fuzzy, and since numerical integration has errors, an
+error term has been added to $R$ to avoid close calls.  This value has
+been empirically chosen as 0.1 meters for use with the provided
+reactive\_commander file.
 
 \end{document}
