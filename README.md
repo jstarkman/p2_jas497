@@ -12,6 +12,16 @@ $ rosrun p2_jas497 p2_lidar_alarm
 $ rosrun p2_jas497 p2_reactive_commander
 ```
 
+Alternatively, the second command can be replaced with `$ rosrun
+p2_jas497 p2_reactive_commander_wall_follower` to witness the robot
+attempt (successfully! see video) to track the wall.  This optional
+component of the assignment has not been documented (nor the code
+cleaned up much) due to time constraints.
+
+## Videos
+
+"stock" refers to the provided RC while "custom" the wall follower.
+
 ## More documentation
 
 See `report.(tex|pdf)` for the brief write-up.

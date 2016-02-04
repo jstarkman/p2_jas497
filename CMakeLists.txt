@@ -25,12 +25,16 @@ catkin_simple()
 # SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 # Libraries: uncomment the following and edit arguments to create a new library
-# cs_add_library(my_lib src/my_lib.cpp)   
+# cs_add_library(my_lib src/my_lib.cpp)
 
 # Executables: uncomment the following and edit arguments to compile new nodes
 # may add more of these lines for more nodes from the same package
-cs_add_executable(p2_lidar_alarm src/lidar_alarm.cpp)
-cs_add_executable(p2_reactive_commander src/reactive_commander.cpp)
+cs_add_executable(p2_lidar_alarm
+                  src/lidar_alarm.cpp)
+cs_add_executable(p2_reactive_commander
+                  src/reactive_commander.cpp)
+cs_add_executable(p2_reactive_commander_wall_follower
+                  src/reactive_commander_wall_follower.cpp)
 
 #the following is required, if desire to link a node in this package with a library created in this same package
 # edit the arguments to reference the named node and named library within this package
@@ -38,4 +42,3 @@ cs_add_executable(p2_reactive_commander src/reactive_commander.cpp)
 
 cs_install()
 cs_export()
-    

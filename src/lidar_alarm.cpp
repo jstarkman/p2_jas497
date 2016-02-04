@@ -14,12 +14,15 @@ bool first_pass = true;
 // double angle_increment_ = 0.0;
 // double range_min_ = 0.0;
 // double range_max_ = 0.0;
-bool laser_alarm_ = false;
+bool laser_alarm_l = false;
+bool laser_alarm_r = false;
 /** Precomputed for speed. */
 double* angle_cache_sin;
 double* angle_cache_cos;
 
 ros::Publisher lidar_alarm_publisher_;
+ros::Publisher lidar_alarm_publisher_l;
+ros::Publisher lidar_alarm_publisher_r;
 
 /**
  * Reminder: `$ rosmsg show sensor_msgs/LaserScan` to see the struct.
@@ -43,6 +46,8 @@ void laserCallback(const sensor_msgs::LaserScan& laser_scan) {
 		angle_increment_ = laser_scan.angle_increment;
 		// range_min_ = laser_scan.range_min;
 		// range_max_ = laser_scan.range_max;
+
+		//precompute these
 		angle_cache_sin = new double[i];
 		angle_cache_cos = new double[i];
 		while (i-->0) {
@@ -55,21 +60,33 @@ void laserCallback(const sensor_msgs::LaserScan& laser_scan) {
 		i = laser_scan.ranges.size();
 		first_pass = false;
 	}
-	laser_alarm_ = false;
+	laser_alarm_l = false;
+	laser_alarm_r = false;
 
 	while (i-->0) {
 		r = laser_scan.ranges[i];
 		x = r * angle_cache_cos[i];
 		y = r * angle_cache_sin[i];
 		if ( (0 < x && x < MIN_SAFE_DISTANCE) &&
-		     (-ROBOT_RADIUS < y && y < ROBOT_RADIUS) ){
-			laser_alarm_ = true;
+		     (-ROBOT_RADIUS < y && y < ROBOT_RADIUS) ) {
+			//if here, then in danger zone
+			if (y >= 0) {
+				laser_alarm_l = true;
+			} else {
+				laser_alarm_r = true;
+			}
 			ROS_WARN("Detected an object in front of me.");
 			break; //no need to keep looking
 		}
 	}
-	lidar_alarm_msg.data = laser_alarm_;
+	//be conservative
+	lidar_alarm_msg.data = laser_alarm_l || laser_alarm_r;
 	lidar_alarm_publisher_.publish(lidar_alarm_msg);
+	//be direct
+	lidar_alarm_msg.data = laser_alarm_l;
+	lidar_alarm_publisher_l.publish(lidar_alarm_msg);
+	lidar_alarm_msg.data = laser_alarm_r;
+	lidar_alarm_publisher_r.publish(lidar_alarm_msg);
 }
 
 /**
@@ -80,8 +97,12 @@ int main(int argc, char **argv) {
 	ros::NodeHandle nh;
 	//create a Subscriber object and have it subscribe to the
 	//lidar topic (made global so callback can use it)
-	ros::Publisher pub = nh.advertise<std_msgs::Bool>("lidar_alarm", 1);
-	lidar_alarm_publisher_ = pub;
+	ros::Publisher pub  = nh.advertise<std_msgs::Bool>("lidar_alarm", 1);
+	ros::Publisher publ = nh.advertise<std_msgs::Bool>("lidar_alarm_l", 1);
+	ros::Publisher pubr = nh.advertise<std_msgs::Bool>("lidar_alarm_r", 1);
+	lidar_alarm_publisher_  = pub;
+	lidar_alarm_publisher_l = publ;
+	lidar_alarm_publisher_r = pubr;
 	ros::Subscriber lidar_subscriber =
 	  nh.subscribe("robot0/laser_0", 1, laserCallback);
 
